@@ -67,7 +67,7 @@ Push image to Docker Hub:
 ```bash MONGO_URI - MongoDB connection string (default: mongodb://localhost:27017/) ```
 
 👤 Author
- Monika Kuamri
+ Monika Kumari
 
 Docker Hub Image: monika413/task-manager-flask-app
 

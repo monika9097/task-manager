@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify, send_from_directory
 from pymongo import MongoClient
+from bson import ObjectId
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.')
 
 # MongoDB connection
 client = MongoClient(os.environ.get("MONGO_URI", "mongodb://localhost:27017/"))
@@ -10,7 +11,7 @@ db = client["taskdb"]
 tasks_collection = db["tasks"]
 
 @app.route('/')
-def serve_index():
+def serve_ui():
     return send_from_directory('.', 'index.html')
 
 @app.route('/tasks', methods=['GET'])

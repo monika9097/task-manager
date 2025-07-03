@@ -30,13 +30,19 @@
                 li.className = task.done ? 'done' : '';
                 li.textContent = task.title;
 
+                // Create delete button
                 const delBtn = document.createElement('button');
                 delBtn.textContent = '❌';
-                delBtn.onclick = () => deleteTask(task._id);
+                delBtn.onclick = function () {
+                    deleteTask(task._id);
+                };
 
+                // Create mark as done button
                 const doneBtn = document.createElement('button');
                 doneBtn.textContent = '✔️';
-                doneBtn.onclick = () => markDone(task._id);
+                doneBtn.onclick = function () {
+                    markDone(task._id);
+                };
 
                 li.appendChild(delBtn);
                 li.appendChild(doneBtn);

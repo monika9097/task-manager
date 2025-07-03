@@ -5,40 +5,52 @@
 </head>
 <body>
   <h1>Task Manager</h1>
-  <ul id="task-list"></ul>
 
-  <h2>Add Task</h2>
-  <input type="text" id="task-title" placeholder="Task title">
-  <button onclick="addTask()">Add Task</button>
+  <form id="taskForm">
+    <input type="text" id="title" placeholder="Enter task title" required />
+    <button type="submit">Add Task</button>
+  </form>
+
+  <h2>Tasks:</h2>
+  <ul id="taskList"></ul>
 
   <script>
-    async function loadTasks() {
-      const response = await fetch('/tasks');
-      const tasks = await response.json();
-      const list = document.getElementById('task-list');
-      list.innerHTML = '';
-      tasks.forEach(task => {
-        const li = document.createElement('li');
-        li.textContent = task.title + (task.done ? ' ✅' : ' ❌');
-        list.appendChild(li);
-      });
+    // Fetch existing tasks
+    function fetchTasks() {
+      fetch("/tasks")
+        .then(response => response.json())
+        .then(tasks => {
+          const list = document.getElementById("taskList");
+          list.innerHTML = '';
+          tasks.forEach(task => {
+            const item = document.createElement("li");
+            item.textContent = task.title;
+            list.appendChild(item);
+          });
+        });
     }
 
-    async function addTask() {
-      const titleInput = document.getElementById('task-title');
-      const title = titleInput.value.trim();
-      if (!title) return alert('Please enter a task title');
+    // Submit new task
+    document.getElementById("taskForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
 
-      await fetch('/tasks', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({title: title, done: false})
+      fetch("/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title: title, done: false })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("title").value = "";
+        fetchTasks();
       });
-      titleInput.value = '';
-      loadTasks();
-    }
+    });
 
-    loadTasks();
+    // Initial fetch
+    fetchTasks();
   </script>
 </body>
 </html>

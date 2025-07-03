@@ -25,7 +25,9 @@ Users can **add**, **view**, **mark complete**, and **delete** tasks via a RESTf
 - Vanilla JavaScript, HTML, and CSS for frontend
 
 ---
+## Task Manager UI ##
 
+![Task Manager UI](app-image.png)
 
 
 ## ⚙️ How to Run Locally
